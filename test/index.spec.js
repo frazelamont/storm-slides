@@ -99,7 +99,8 @@ describe('Initialisation', () => {
     });
 
     it('should create an interval when enabling autoplay', () => {
-        SlidesAutoplay.should.have.property('interval').which.is.a.Number();
+        //JSDom returns TImeout object from setInterval, not a number
+        SlidesAutoplay[0].should.have.property('interval');
     });
 });
 
