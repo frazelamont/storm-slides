@@ -26,12 +26,33 @@ const html = `<div class="js-slides">
                     <li><button class="js-slides__nav-item">4</button><li>
                 </ul>
                 <div aria-live="polite" aria-atomic="true" class="visuallyhidden js-slides__liveregion"></div>
-            </div>`;
+            </div>
+            <div class="js-slides-autoplay">
+            <div class="js-slides__list">
+                <div class="js-slides__item">
+                    <img data-src="http://lorempixel.com/400/200">
+                </div>
+                <div class="js-slides__item">
+                    <img data-src="http://lorempixel.com/400/200">
+                </div>
+                <div class="js-slides__item">
+                    <img data-src="http://lorempixel.com/400/200">
+                </div>
+                <div class="js-slides__item">
+                    <img data-src="http://lorempixel.com/400/200">
+                </div>
+            </div>
+            <div aria-live="polite" aria-atomic="true" class="visuallyhidden js-slides__liveregion"></div>
+        </div>`;
 
 document.body.innerHTML = html;
 
 let SlidesBasic = Slides.init('.js-slides', {
     callback: () => {}
+});
+
+let SlidesAutoplay = Slides.init('.js-slides-autoplay', {
+    autoPlay: true
 });
 
 describe('Initialisation', () => {
@@ -44,13 +65,11 @@ describe('Initialisation', () => {
 
 	it('should throw an error if no elements are found', () => {
 		Slides.init.bind(Slides, '.js-err').should.throw();
-    });
-    
+    });    
 
 	it('should throw an error if slide navigation does not match the number of slides', () => {
 		//Slides.init.bind(Slides, '.js-slides-2').should.throw();
-	});
-	
+	});	
 	
 	it('each array item should be an object with the correct properties', () => {
 		SlidesBasic[0].should.be.an.instanceOf(Object).and.not.empty();
@@ -79,7 +98,9 @@ describe('Initialisation', () => {
         }, 0);
     });
 
-
+    it('should create an interval when enabling autoplay', () => {
+        SlidesAutoplay.should.have.property('interval').which.is.a.Number();
+    });
 });
 
 
@@ -147,4 +168,3 @@ describe('Interaction', () => {
     });
 
 });
-

@@ -5,15 +5,15 @@ const KEY_CODES = {
 
 export default {
 	init(){
-		this.slides = [].slice.call(document.querySelectorAll(this.settings.itemSelector))
+		this.slides = [].slice.call(this.node.querySelectorAll(this.settings.itemSelector))
 						.map(slide => ({
 							unloadedImgs: [].slice.call(slide.querySelectorAll('[data-srcset], [data-src]')),
 							container: slide
 						}));
 
-		this.nextButton = document.querySelector(this.settings.buttonNextSelector);
-		this.previousButton = document.querySelector(this.settings.buttonPreviousSelector);
-		this.navItems = [].slice.call(document.querySelectorAll(this.settings.navItemSelector));
+		this.nextButton = this.node.querySelector(this.settings.buttonNextSelector);
+		this.previousButton = this.node.querySelector(this.settings.buttonPreviousSelector);
+		this.navItems = [].slice.call(this.node.querySelectorAll(this.settings.navItemSelector));
 
 		if(this.navItems.length > 0 && this.navItems.length !== this.slides.length) throw new Error('Slide navigation does not match the number of slides.');
 
@@ -22,7 +22,7 @@ export default {
 		this.slides[this.currentIndex].container.classList.add(this.settings.activeClass);
 		this.initHandlers();
 		this.settings.preload ? this.slides.forEach((slide, i) => { this.loadImage(i); }) : this.loadImages(this.settings.startIndex);
-
+        this.settings.autoPlay ? this.autoPlay(this.settings.slideDuration) : null;
 		return this;
 	},
 	initHandlers(){
@@ -110,5 +110,10 @@ export default {
 		this.navItems.length && this.navItems[i].setAttribute('aria-current', true);
 		this.notification.innerHTML = `Slide ${i + 1} of ${this.slides.length}`;
 		this.currentIndex = i;
-	}
+    },
+    autoPlay(slideDuration) {
+        this.interval = setInterval(() => {
+            this.next();
+        }, slideDuration ? slideDuration * 1000 : 5000);
+    }
 };

@@ -129,7 +129,9 @@ Basic CSS to support fading transition
 ## Options
 ```
 {
-    callback: null
+    callback: null,
+    autoPlay: bool,
+    slideDuration: int (duration in seconds, default is 5)
 }
 ```
 
@@ -138,7 +140,9 @@ e.g.
 Slides.init('.js-selector', {
     callback(){
         console.log(this);
-    }
+    },
+    autoPlay: true,
+    slideDuration: 3
 });
 ```
 
