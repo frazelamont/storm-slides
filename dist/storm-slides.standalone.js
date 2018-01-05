@@ -1,6 +1,6 @@
 /**
  * @name storm-slides: Slides/carousel/fader/slider component
- * @version 0.2.0: Mon, 13 Nov 2017 12:45:14 GMT
+ * @version 0.2.0: Thu, 16 Nov 2017 20:25:26 GMT
  * @author stormid
  * @license MIT
  */
@@ -37,7 +37,9 @@ var defaults = {
 	hideNextClass: 'hide--next',
 	isCarousel: true,
 	startIndex: 0,
-	preload: false
+	preload: false,
+	autoPlay: false,
+	slideDuration: 5
 };
 
 var KEY_CODES = {
@@ -69,7 +71,7 @@ var componentPrototype = {
 		this.settings.preload ? this.slides.forEach(function (slide, i) {
 			_this.loadImage(i);
 		}) : this.loadImages(this.settings.startIndex);
-		this.settings.autoPlay ? this.autoPlay(this.settings.slideDuration, this.next) : null;
+		this.settings.autoPlay ? this.autoPlay(this.settings.slideDuration) : null;
 		return this;
 	},
 	initHandlers: function initHandlers() {
@@ -161,7 +163,7 @@ var componentPrototype = {
 	setCurrent: function setCurrent(i) {
 		this.slides[i].container.classList.add(this.settings.activeClass);
 		this.slides[i].container.setAttribute('tabindex', '-1');
-		this.slides[i].container.focus();
+		!this.settings.autoPlay && this.slides[i].container.focus();
 		this.navItems.length && this.navItems[i].setAttribute('aria-current', true);
 		this.notification.innerHTML = 'Slide ' + (i + 1) + ' of ' + this.slides.length;
 		this.currentIndex = i;

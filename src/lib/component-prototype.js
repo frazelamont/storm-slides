@@ -106,7 +106,7 @@ export default {
 	setCurrent(i){
 		this.slides[i].container.classList.add(this.settings.activeClass);
 		this.slides[i].container.setAttribute('tabindex', '-1');
-		this.slides[i].container.focus();
+		!this.settings.autoPlay && this.slides[i].container.focus();
 		this.navItems.length && this.navItems[i].setAttribute('aria-current', true);
 		this.notification.innerHTML = `Slide ${i + 1} of ${this.slides.length}`;
 		this.currentIndex = i;
