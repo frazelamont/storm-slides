@@ -1,6 +1,6 @@
 /**
  * @name storm-slides: Slides/carousel/fader/slider component
- * @version 0.2.0: Thu, 16 Nov 2017 20:25:26 GMT
+ * @version 0.3.1: Thu, 18 Jan 2018 11:48:17 GMT
  * @author stormid
  * @license MIT
  */
@@ -157,13 +157,13 @@ var componentPrototype = {
 		this.slides[this.currentIndex].container.classList.add(isForwards ? this.settings.hidePreviousClass : this.settings.hideNextClass);
 		this.slides[index].container.classList.add('' + (isForwards ? this.settings.showNextClass : this.settings.showPreviousClass));
 		this.setCurrent(index);
+		!this.settings.autoPlay && this.slides[index].container.focus();
 
 		this.settings.callback && typeof this.settings.callback === 'function' && this.settings.callback();
 	},
 	setCurrent: function setCurrent(i) {
 		this.slides[i].container.classList.add(this.settings.activeClass);
 		this.slides[i].container.setAttribute('tabindex', '-1');
-		!this.settings.autoPlay && this.slides[i].container.focus();
 		this.navItems.length && this.navItems[i].setAttribute('aria-current', true);
 		this.notification.innerHTML = 'Slide ' + (i + 1) + ' of ' + this.slides.length;
 		this.currentIndex = i;
