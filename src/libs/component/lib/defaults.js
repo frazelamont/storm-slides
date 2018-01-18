@@ -12,5 +12,7 @@ export default {
 	hideNextClass: 'hide--next',
 	isCarousel: true,
 	startIndex: 0,
-	preload: false
+	preload: false,
+	autoPlay: false,
+	slideDuration: 5
 };

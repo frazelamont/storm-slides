@@ -1,6 +1,6 @@
 /**
  * @name storm-slides: Slides/carousel/fader/slider component
- * @version 0.2.0: Fri, 27 Oct 2017 11:54:19 GMT
+ * @version 0.3.1: Thu, 18 Jan 2018 11:48:17 GMT
  * @author stormid
  * @license MIT
  */
@@ -37,7 +37,9 @@ var defaults = {
 	hideNextClass: 'hide--next',
 	isCarousel: true,
 	startIndex: 0,
-	preload: false
+	preload: false,
+	autoPlay: false,
+	slideDuration: 5
 };
 
 var KEY_CODES = {
@@ -49,16 +51,16 @@ var componentPrototype = {
 	init: function init() {
 		var _this = this;
 
-		this.slides = [].slice.call(document.querySelectorAll(this.settings.itemSelector)).map(function (slide) {
+		this.slides = [].slice.call(this.node.querySelectorAll(this.settings.itemSelector)).map(function (slide) {
 			return {
 				unloadedImgs: [].slice.call(slide.querySelectorAll('[data-srcset], [data-src]')),
 				container: slide
 			};
 		});
 
-		this.nextButton = document.querySelector(this.settings.buttonNextSelector);
-		this.previousButton = document.querySelector(this.settings.buttonPreviousSelector);
-		this.navItems = [].slice.call(document.querySelectorAll(this.settings.navItemSelector));
+		this.nextButton = this.node.querySelector(this.settings.buttonNextSelector);
+		this.previousButton = this.node.querySelector(this.settings.buttonPreviousSelector);
+		this.navItems = [].slice.call(this.node.querySelectorAll(this.settings.navItemSelector));
 
 		if (this.navItems.length > 0 && this.navItems.length !== this.slides.length) throw new Error('Slide navigation does not match the number of slides.');
 
@@ -69,7 +71,7 @@ var componentPrototype = {
 		this.settings.preload ? this.slides.forEach(function (slide, i) {
 			_this.loadImage(i);
 		}) : this.loadImages(this.settings.startIndex);
-
+		this.settings.autoPlay ? this.autoPlay(this.settings.slideDuration) : null;
 		return this;
 	},
 	initHandlers: function initHandlers() {
@@ -155,16 +157,23 @@ var componentPrototype = {
 		this.slides[this.currentIndex].container.classList.add(isForwards ? this.settings.hidePreviousClass : this.settings.hideNextClass);
 		this.slides[index].container.classList.add('' + (isForwards ? this.settings.showNextClass : this.settings.showPreviousClass));
 		this.setCurrent(index);
+		!this.settings.autoPlay && this.slides[index].container.focus();
 
 		this.settings.callback && typeof this.settings.callback === 'function' && this.settings.callback();
 	},
 	setCurrent: function setCurrent(i) {
 		this.slides[i].container.classList.add(this.settings.activeClass);
 		this.slides[i].container.setAttribute('tabindex', '-1');
-		this.slides[i].container.focus();
 		this.navItems.length && this.navItems[i].setAttribute('aria-current', true);
 		this.notification.innerHTML = 'Slide ' + (i + 1) + ' of ' + this.slides.length;
 		this.currentIndex = i;
+	},
+	autoPlay: function autoPlay(slideDuration) {
+		var _this5 = this;
+
+		this.interval = setInterval(function () {
+			_this5.next();
+		}, slideDuration ? slideDuration * 1000 : 5000);
 	}
 };
 
