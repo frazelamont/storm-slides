@@ -6,13 +6,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mjbp/storm-slides.git"
+    "url": "https://github.com/stormid/storm-slides.git"
   },
   "bugs": {
-    "url": "https://github.com/mjbp/storm-slides/issues"
+    "url": "https://github.com/stormid/storm-slides/issues"
   },
   "main": "dist/index.js",
-  "browser": "dist/storm-slides.standalone.js",
   "keywords": [
     "stormid",
     "slides",
@@ -25,9 +24,9 @@
     "build": "node_modules/.bin/gulp build",
     "serve": "node_modules/.bin/gulp server",
     "start": "node_modules/.bin/gulp server",
-    "test": "istanbul cover _mocha --report lcovonly -- -R spec && codecov",
-    "test:local": "istanbul cover _mocha",
-    "test:watch": "NODE_ENV=test mocha --watch"
+    "test": "_mocha",
+    "test:watch": "NODE_ENV=test mocha --watch",
+    "test:coverage": "istanbul cover _mocha --report lcovonly -- -R spec && codecov"
   },
   "browserify": {
     "transform": [

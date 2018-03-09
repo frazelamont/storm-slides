@@ -1,13 +1,10 @@
 # Storm Slides
-
-[![Build Status](https://travis-ci.org/mjbp/storm-slides.svg?branch=master)](https://travis-ci.org/mjbp/storm-slides)
-[![codecov.io](http://codecov.io/github/mjbp/storm-slides/coverage.svg?branch=master)](http://codecov.io/github/mjbp/storm-slides?branch=master)
 [![npm version](https://badge.fury.io/js/storm-slides.svg)](https://badge.fury.io/js/storm-slides)
 
 Slides/carousel/fader/slider component. Accessible, lazy-loading image content, multi-panel content area with between-slide transitions.
 
 ## Example
-[https://mjbp.github.io/storm-slides](https://mjbp.github.io/storm-slides)
+[https://stormid.github.io/storm-slides](https://stormid.github.io/storm-slides)
 
 ## Usage
 HTML
@@ -53,7 +50,7 @@ asynchronous browser loading (use the .standalone version in the /dist folder) u
 ```
 import Load from 'storm-load';
 
-Load('{{path}}/storm-component-boilerplate.standalone.js')
+Load('{{path}}/storm-slides.standalone.js')
     .then(() => {
         StormSlides.init('.js-slides');
     });
@@ -130,7 +127,7 @@ Basic CSS to support fading transition
 ```
 {
     callback: null,
-    autoPlay: bool,
+    autoPlay: bool,//not recommended for accessibilityå
     slideDuration: int (duration in seconds, default is 5)
 }
 ```
@@ -154,7 +151,7 @@ npm run test
 ## Browser support
 This is module has both es6 and es5 distributions. The es6 version should be used in a workflow that transpiles.
 
-The es5 version depends upon Object.assign, element.classList, and Promises so all evergreen browsers are supported out of the box, ie9+ is supported with polyfills. ie8+ will work with even more polyfills for Array functions and eventListeners.
+The es5 version depends upon Object.assign so all evergreen browsers are supported out of the box, ie9+ is supported with polyfills. ie8+ will work with even more polyfills for Array functions and eventListeners.
 
 ## Dependencies
 None
